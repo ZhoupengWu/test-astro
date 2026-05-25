@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import "../../styles/global.css";
+import { getParagraphs } from "../../utils/text";
 
 export async function getStaticPaths() {
     const articles = await getCollection("articles");
@@ -16,7 +17,8 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const paragraphs = article.body?.split(".").map(p => p.trim()).filter(p => p.length > 0);
+let paragraphs: string [];
+if (article.body) paragraphs = getParagraphs(article.body);
 ---
 
 <!DOCTYPE html>
