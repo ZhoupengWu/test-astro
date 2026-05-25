@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const { Content } = await render(article);
+const paragraphs = article.body?.split(".").map(p => p.trim()).filter(p => p.length > 0);
 ---
 
 <!DOCTYPE html>
@@ -45,7 +45,11 @@ const { Content } = await render(article);
                 <hr class="my-8" />
 
                 <div class="content">
-                    <Content />
+                    {
+                        paragraphs?.map(paragraph => (
+                            <p class="text-2xl text-amber-500">{paragraph}</p>
+                        ))
+                    }
                 </div>
             </article>
         </main>
